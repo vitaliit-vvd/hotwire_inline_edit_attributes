@@ -1,0 +1,22 @@
+# PostgreSQL. Versions 9.3 and up are supported.
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: postgres
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: hotwire_inline_edit_attributes_development
+
+test:
+  <<: *default
+  database: hotwire_inline_edit_attributes_test
+
+production:
+  <<: *default
+  database: hotwire_inline_edit_attributes_production
+  username: hotwire_inline_edit_attributes
+  password: <%= ENV["HOTWIRE_INLINE_EDIT_ATTRIBUTES_DATABASE_PASSWORD"] %>
