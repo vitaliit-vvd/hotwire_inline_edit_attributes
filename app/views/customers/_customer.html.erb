@@ -1,32 +1,10 @@
 <div id="<%= dom_id customer %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">First name:</strong>
-    <%= customer.first_name %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Last name:</strong>
-    <%= customer.last_name %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Date of birth:</strong>
-    <%= customer.date_of_birth %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Phone:</strong>
-    <%= customer.phone %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= customer.description %>
-  </p>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this customer", customer, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this customer", edit_customer_path(customer), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
+  <% Customer::EDITABLE_ATTRS.each do |attribute| %>
+    <%= turbo_frame_tag attribute do %>
+      <p class="my-5">
+        <strong class="block font-medium mb-1"><%= attribute %>:</strong>
+        <%= link_to (customer[attribute].presence || 'Edit'), [:edit, customer, attribute: attribute] %>
+      </p>
+    <% end %>
   <% end %>
 </div>
